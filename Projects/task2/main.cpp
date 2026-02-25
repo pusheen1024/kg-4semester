@@ -15,9 +15,7 @@ using namespace std;
 #define x first
 #define y second
 
-const int N = 20; // размер клетки
-
-vector<vector<pair<float, float>>> vertices = {
+vector<vector<pair<float, float>>> frog = {
 	{{5, 5}, {8, 4}, {12, 4}, {15, 5}, {15, 6}, {12, 8}, {10, 9}, {8, 8}, {5, 6}, {5, 5}}, // голова
 	{{6, 6}, {7, 5}, {9, 7}, {11, 7}, {13, 5}, {14, 6}}, // улыбка
 	{{8, 4}, {8, 2}, {9, 1}, {10, 2}, {10, 4}, {10, 2}, {11, 1}, {12, 2}, {12, 4}}, // верхние глаза
@@ -42,13 +40,124 @@ vector<vector<pair<float, float>>> vertices = {
 	 {12, 24}, {12, 27}, {11, 25}, {10, 28}, {9, 25}, {8, 27}, {8, 24}, {7, 26}} // трава
 };
 
-Vector2 scale(pair<float, float> pt) { // увеличение рисунка в соответствии с размером клетки
-	return {pt.x * N, pt.y * N};
+const float frog_Vx = 20;
+const float frog_Vy = 30;
+
+vector<float> rabbit = {
+	0.5f, 3.f, 1.f, 4.5f, // от левой щеки вверх до уха
+	1.f, 4.5f, 0.5f, 6.f, // левое ухо слева снизу вверх
+	0.5f, 6.f, 0.5f, 7.5f, // левое ухо слева
+	0.5f, 7.5f, 1.f, 8.f, // левое ухо верх слева
+	1.f, 8.f, 1.5f, 8.f, // левое ухо верх середина
+	1.5f, 8.f, 2.f, 7.5f, // левое ухо верх справа
+	2.f, 7.5f, 1.5f, 6.f, // левое ухо справа сверху вниз
+	1.5f, 6.f, 1.5f, 4.5f, // левое ухо справа до макушки
+	1.5f, 4.5f, 3.f, 4.5f, // макушка
+	3.f, 4.5f, 3.f, 6.f, // правое ухо слева снизу вверх
+	3.f, 6.f, 2.5f, 7.5f, // правое ухо слева
+	2.5f, 7.5f, 3.f, 8.f, // правое ухо верх слева
+	3.f, 8.f, 3.5f, 8.f, // правое ухо верх середина
+	3.5f, 8.f, 4.f, 7.5f, // правое ухо верх справа
+	4.f, 7.5f, 4.f, 6.f, // правое ухо сверху вниз
+	4.f, 6.f, 3.5f, 4.5f, // правое ухо справа
+	3.5f, 4.5f, 4.f, 3.f, // от правого уха вниз до щеки
+	4.f, 3.f, 3.5f, 1.5f, // правая скула
+	3.5f, 1.5f, 2.5f, 1.f, // подбородок справа
+	2.5f, 1.f, 2.f, 1.f, // подбородок снизу
+	2.f, 1.f, 1.f, 1.5f, // подбородок слева
+	1.f, 1.5f, 0.5f, 3.f, // левая скула
+	4.f, 3.f, 5.5f, 3.5f, // спина от головы вправо
+	5.5f, 3.5f, 7.f, 3.5f, // спина верх
+	7.f, 3.5f, 7.5f, 2.5f, // спина сверху до хвоста
+	7.5f, 2.5f, 8.f, 2.5f, // хвост сверху
+	8.f, 2.5f, 8.f, 2.f, // хвост справа
+	8.f, 2.f, 7.5f, 2.f, // хвост низ справа налево
+	7.5f, 2.f, 7.5f, 0.5f, // задняя нога справа сверху вниз
+	7.5f, 0.5f, 6.5f, 0.5f, // задняя нога низ
+	6.5f, 0.5f, 6.5f, 1.f, // задняя нога слева
+	6.5f, 1.f, 6.f, 1.f, // между задних ног
+	6.f, 1.f, 6.f, 0.5f, // левая задняя нога справа
+	6.f, 0.5f, 5.f, 0.5f, // левая задняя нога низ
+	5.f, 0.5f, 5.f, 1.f, // левая задняя нога слева
+	5.f, 1.f, 4.f, 1.f, // между задними и передними ногами
+	4.f, 1.f, 4.f, 0.5f, // правая передняя нога справа
+	4.f, 0.5f, 3.f, 0.5f, // правая передняя нога низ
+	// туловище
+	3.f, 0.5f, 3.f, 1.f, // правая передняя нога слева
+	3.f, 1.f, 2.5f, 1.f, // между передних ног
+	2.5f, 1.f, 2.5f, 0.5f, // передняя нога справа
+	2.5f, 0.5f, 1.5f, 0.5f, // передняя нога низ
+	1.5f, 0.5f, 1.5f, 1.25f, // передняя нога слева
+	1.5f, 3.5f, 1.5f, 3.f, // левый глаз слева сверху вниз
+	1.5f, 3.f, 2.f, 3.f, // левый глаз низ
+	2.f, 3.f, 2.f, 3.5f, // левый глаз справа
+	2.f, 3.5f, 1.5f, 3.5f, // левый глаз верх
+	2.5f, 3.5f, 2.5f, 3.f, // правый глаз слева
+	2.5f, 3.f, 3.f, 3.f, // правый глаз снизу
+	3.f, 3.f, 3.f, 3.5f, // правый глаз справа
+	3.f, 3.5f, 2.5f, 3.5f, // правый глаз сверху
+	1.f, 5.5f, 1.f, 7.f, // левая ушная раковина
+	3.5f, 5.5f, 3.5f, 7.f, // правая ушная раковина
+	2.f, 2.5f, 2.5f, 2.5f, // нос сверху
+	2.5f, 2.5f, 2.25f, 2.f, // нос справа
+	2.25f, 2.f, 2.f, 2.5f // нос слева
+};
+
+const float rabbit_Vx = 8.5;
+const float rabbit_Vy = 8.5;
+
+bool keepAspect = 1;
+bool drawing = 1;
+
+void drawFrog() {
+	float Wx = GetScreenWidth();
+    float Wy = GetScreenHeight();
+    float windowAspect = Wx / Wy;
+	float figureAspect = frog_Vx / frog_Vy;
+    float S = (figureAspect < windowAspect ? Wy / frog_Vy : Wx / frog_Vx);
+    float Sx, Sy;
+    if (keepAspect) {
+    	figureAspect = frog_Vx / frog_Vy;
+        Sx = Sy = (figureAspect < windowAspect ? Wy / frog_Vy : Wx / frog_Vx);
+	}
+    else {
+        Sx = Wx / frog_Vx;
+        Sy = Wy / frog_Vy;
+    }
+	for (auto v : frog) {
+		for (int i = 1; i < v.size(); i++) {
+			DrawLineEx({v[i - 1].x * Sx, v[i - 1].y * Sy}, 
+					   {v[i].x * Sx, v[i].y * Sy}, 3, BLACK);
+		}
+	}
+}
+
+
+void drawRabbit() {
+	float Wx = GetScreenWidth();
+    float Wy = GetScreenHeight();
+    float windowAspect = Wx / Wy;
+	float figureAspect = rabbit_Vx / rabbit_Vy;
+    float S = (figureAspect < windowAspect ? Wy / rabbit_Vy : Wx / rabbit_Vx);
+    float Sx, Sy;
+    if (keepAspect) {
+    	figureAspect = rabbit_Vx / rabbit_Vy;
+        Sx = Sy = (figureAspect < windowAspect ? Wy / rabbit_Vy : Wx / rabbit_Vx);
+	}
+    else {
+        Sx = Wx / rabbit_Vx;
+        Sy = Wy / rabbit_Vy;
+    }
+    float Ty = Sy * rabbit_Vy;
+	for (int i = 0; i < rabbit.size(); i += 4) {
+    	DrawLineEx({Sx * rabbit[i], Ty - Sy * rabbit[i + 1]}, 
+				   {Sx * rabbit[i + 2], Ty - Sy * rabbit[i + 3]}, 3, BLACK);
+    }
 }
 
 int main() {
-	float width = N * 20;
-	float height = N * 30;
+	float width = 480;
+	float height = 600;
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Potapkina-graphics");
     SetTargetFPS(60);
@@ -57,12 +166,11 @@ int main() {
 		width = GetScreenWidth();
 		height = GetScreenHeight();
         ClearBackground(SKYBLUE);
-		for (auto v : vertices) {
-			for (int i = 1; i < v.size(); i++) {
-				DrawLineEx(scale(v[i - 1]), scale(v[i]), 3, BLACK);
-			}
-		}
+		if (IsKeyPressed(KEY_M)) keepAspect ^= 1;
+		if (IsKeyPressed(KEY_N)) drawing ^= 1;
+		if (drawing) drawFrog();
+		else drawRabbit();
 		EndDrawing();
 	}
-    CloseWindow(); а
+    CloseWindow();
 }
