@@ -62,15 +62,9 @@ Figure read_from_file(const char *filename, bool &fl) {
         stringstream sin(line);
 		string command;
 		sin >> command;
-		if (command == "frame") {
-			sin >> figure.Vx >> figure.Vy;
-		}
-		else if (command == "color") {
-			sin >> r >> g >> b;
-		}
-		else if (command == "thickness") {
-			sin >> thickness;
-		}
+		if (command == "frame")	sin >> figure.Vx >> figure.Vy;
+		else if (command == "color") sin >> r >> g >> b;
+		else if (command == "thickness") sin >> thickness;
 		else if (command == "path") {
 			vector<Vec2> vertices;
 			int n;
@@ -136,8 +130,8 @@ int main() {
 				bool fl = 0;
 				figure = read_from_file(filename, fl);
                 float figure_aspect = figure.Vx / figure.Vy;
-                float S = (figure_aspect < window_aspect ? width / figure.Vy : width / figure.Vx);
-                float Ty = S * figure.Vy;
+                float S = (figure_aspect < window_aspect ? height / figure.Vy : width / figure.Vx);
+				float Ty = S * figure.Vy;
                 if (fl) initT = translate(0, 50) * scale(S, S);
 				else initT = translate(0, Ty + 50) * scale(S, -S);
                 T = initT;
