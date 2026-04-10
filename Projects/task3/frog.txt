@@ -1,7 +1,7 @@
 frame 20 30
 
 # голова
-color 0 255 0
+color 19 136 8
 thickness 2
 path 10
 5 5 
@@ -27,7 +27,7 @@ path 6
 14 6
 
 # верхние глаза
-color 0 255 0
+color 19 136 8
 thickness 2
 path 9
 8 4
@@ -93,21 +93,21 @@ path 7
 7 8
 
 # шея слева
-color 0 255 0
+color 19 136 8
 thickness 2
 path 2
 8 8
 8 9
 
 # шея справа
-color 0 255 0
+color 19 136 8
 thickness 2
 path 2
 12 8
 12 9
 
 # левая передняя нога
-color 0 255 0
+color 19 136 8
 thickness 2
 path 9
 7.5 11.5
@@ -121,7 +121,7 @@ path 9
 9.75 10.75
 	
 # правая передняя нога
-color 0 255 0
+color 19 136 8
 thickness 2
 path 9
 10.25 10.75
@@ -135,7 +135,7 @@ path 9
 12.5 11.5
 	
 # левое бедро
-color 0 255 0
+color 19 136 8
 thickness 2
 path 7
 7 9
@@ -147,7 +147,7 @@ path 7
 4 9
 
 # левая задняя нога
-color 0 255 0
+color 19 136 8
 thickness 2
 path 10
 5.2 12.8
@@ -162,7 +162,7 @@ path 10
 6 15
 
 # правое бедро
-color 0 255 0
+color 19 136 8
 thickness 2
 path 7
 13 9
@@ -174,7 +174,7 @@ path 7
 16 9
 
 # правая задняя нога
-color 0 255 0
+color 19 136 8
 thickness 2
 path 10
 14 14
@@ -212,7 +212,7 @@ path 7
 3 19
 
 # пятно на шляпке два
-color 0 255 0
+color 255 255 255
 thickness 2
 path 3
 4 13

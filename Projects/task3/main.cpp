@@ -110,6 +110,7 @@ int main() {
 		T = tr * T;
 		T = translate(center_x, center_y) * T;
 	};
+	Color color = SKYBLUE;
 
 	while (!WindowShouldClose()) {
 		BeginDrawing();
@@ -118,8 +119,8 @@ int main() {
 		center_x = width / 2;
 		center_y = height / 2;
 		window_aspect = width / height;
-
-        ClearBackground(BLACK);
+		
+		ClearBackground(color);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { 
 			input_file.setCursor();
 		}
@@ -168,6 +169,10 @@ int main() {
 			if (IsKeyDown(KEY_L)) op(scale(1.0, 1.0 / 1.1));
 			// к исходному изображению
 			if (IsKeyPressed(KEY_ESCAPE)) T = initT;
+
+			if (IsKeyPressed(KEY_V)) color = DARKPURPLE;
+			if (IsKeyPressed(KEY_B)) color = BLACK;
+			if (IsKeyPressed(KEY_P)) color = SKYBLUE;
 		}
 		input_file.render();
 		label.render();
