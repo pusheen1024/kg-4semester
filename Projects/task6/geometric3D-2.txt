@@ -1,0 +1,141 @@
+camera 10 5 5 10 5 0 0 1 0
+screen 90 2 5 20
+
+# легущька -> пирамидка
+
+color 0 255 0
+thickness 2
+
+model 0.5 0.433 0.4082 1 0.866 0.8165
+path 5
+0 0 0
+0.5 0.2887 0.8165
+1 0 0
+0.5 0.866 0
+0.5 0.2887 0.8165
+path 3
+0.5 0.866 0
+0 0 0
+1 0 0
+
+# преобразования и размещения по описанию
+
+pushTransform
+scale 0.75
+
+pushTransform
+# доп. поворот на (1, 1, 0)
+rotate 90 1 1 0
+translate 10 5 0
+translate 0 4 0
+figure
+
+translate -10 -5 1
+rotate 60 0 0 1
+translate 10 5 -1
+figure
+
+translate -10 -5 2
+rotate 60 0 0 1
+translate 10 5 -2
+figure
+
+translate -10 -5 3
+rotate 60 0 0 1
+translate 10 5 -3
+figure
+
+translate -10 -5 4
+rotate 60 0 0 1
+translate 10 5 -4
+figure
+
+translate -10 -5 5
+rotate 60 0 0 1
+translate 10 5 -5
+figure
+
+popTransform
+scale 2
+rotate -90 0 0 1
+translate 10 5 6
+figure
+
+# крэлик -> кубик
+
+color 0 0 255
+thickness 2
+
+model 0.5 0.5 0.5 1 1 1 
+path 10
+0 1 0
+1 1 0
+1 1 1
+0 1 1
+0 1 0
+0 0 0
+1 0 0
+1 0 1
+0 0 1
+0 1 1
+path 2
+0 0 0
+0 0 1
+path 2
+1 1 0
+1 0 0
+path 2
+1 1 1
+1 0 1
+
+# преобразования и размещения по описанию
+
+popTransform
+pushTransform
+scale 0.5
+# доп. поворот на (1, 1, 0)
+rotate 90 1 1 0
+rotate 180 0 0 1
+translate 10 5 0
+translate 0 4 0
+
+translate -10 -5 -1
+rotate 30 0 0 1
+translate 10 5 1
+figure
+
+translate -10 -5 -2
+rotate 60 0 0 1
+translate 10 5 2
+figure
+
+translate -10 -5 -3
+rotate 60 0 0 1
+translate 10 5 3
+figure
+
+translate -10 -5 -4
+rotate 60 0 0 1
+translate 10 5 4
+figure
+
+translate -10 -5 -5
+rotate 60 0 0 1
+translate 10 5 5
+figure
+
+translate -10 -5 -6
+rotate 60 0 0 1
+translate 10 5 6
+figure
+
+popTransform
+scale 2
+pushTransform
+translate 3 5 -7
+figure
+
+popTransform
+rotate 180 0 0 1
+translate 17 5 -8
+figure
